@@ -14,17 +14,21 @@ namespace FileCS
 			try
 			{
 			    StreamReader sr = new StreamReader("201 RAW.txt");
+				StreamWriter sw = new StreamWriter("201 ready.txt",true);
 				while (!sr.EndOfStream)
 				{
-					string buffer = sr.ReadLine().Split(' ').Last();
-					Console.WriteLine(buffer);
+					string buffer = sr.ReadLine();
+					if (buffer.Length != 0) sw.WriteLine($"{buffer.Split(' ').Last()}\t{buffer.Substring(0, buffer.IndexOf(' '))}");
+					else sw.WriteLine("\n");
 				}
 				sr.Close();
+				sw.Close();
 			}
 			catch(Exception ex)
 			{
 				Console.WriteLine(ex.Message);
 			}
+			System.Diagnostics.Process.Start("notepad", "201 ready.txt");
 		}
 	}
 }
